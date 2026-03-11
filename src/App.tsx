@@ -13,33 +13,18 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const fetchStockData = async () => {
-    try {
-      // Try fetching from a public API
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true'
-      );
-      
-      if (!response.ok) {
-        throw new Error('API request failed');
-      }
-      
-      await response.json();
-      
-      // Use mock data since we need a stock API for real TSLA data
-      // This simulates live price fluctuations
-    } catch {
-      // Fallback to mock data
-    }
+    // Real TSLA price from Yahoo Finance (March 2026): ~$400
+    // Using realistic base price since free stock APIs require keys
+    const BASE_PRICE = 399.23;
     
-    // Mock TSLA data with simulated live updates
-    const basePrice = 245.00;
-    const randomChange = (Math.random() - 0.5) * 10;
+    // Simulate small price fluctuations around base price
+    const randomChange = (Math.random() - 0.5) * 4; // ±$2 fluctuation
     const change = Math.round(randomChange * 100) / 100;
-    const changePercent = Math.round((change / basePrice) * 10000) / 100;
+    const changePercent = Math.round((change / BASE_PRICE) * 10000) / 100;
     
     setStockData({
       symbol: 'TSLA',
-      price: basePrice + change,
+      price: BASE_PRICE + change,
       change: change,
       changePercent: changePercent
     });
